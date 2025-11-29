@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Secuencia - API Mutantes</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @media print {
+            .page-break { page-break-before: always; }
+            body { margin: 0; }
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            padding: 10px;
+            background: #ecf0f1;
+            border-left: 5px solid #3498db;
+        }
+        
+        .info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media screen {
+            .print-instructions {
+                background: #fff3cd;
+                border: 1px solid #ffc107;
+                padding: 15px;
+                margin: 20px 0;
+                border-radius: 5px;
+                text-align: center;
+            }
+        }
+        
+        @media print {
+            .print-instructions { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Diagramas de Secuencia - API de Detección de Mutantes</h1>
+    
+    <div class="info">
+        <strong>Proyecto:</strong> Global Mutantes - Detección de ADN<br>
+        <strong>Autora:</strong> Federica Benito<br>
+        <strong>Comisión:</strong> 3K10<br>
+        <strong>Fecha:</strong> <span id="fecha"></span>
+    </div>
+    
+    <div class="print-instructions">
+        <strong>Para exportar a PDF:</strong><br>
+        Presiona <kbd>Ctrl + P</kbd> (Windows/Linux) o <kbd>Cmd + P</kbd> (Mac)<br>
+        Selecciona "Guardar como PDF" en el destino de impresión
+    </div>
+
+    <!-- Diagrama 1: isMutant() -->
+    <div class="page-break">
+        <h2>Diagrama 1: Método isMutant() - Algoritmo de Detección</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+sequenceDiagram
+    participant Caller as Llamador<br/>(ServicioMutante)
+    participant MD as MutanteDetector
+    participant CheckRows as checkRows()
+    participant CheckColumns as checkColumns()
+    participant CheckDiagonals as checkDiagonals()
+
+    Note over Caller,CheckDiagonals: Método isMutant(String[] dna) - Detección de secuencias
+
+    Caller->>MD: isMutant(dna[])
+    activate MD
+    
+    MD->>MD: int k = dna.length<br/>int sequenceCount = 0
+    
+    Note right of MD: 1. Verificar filas (horizontal)
+    MD->>CheckRows: checkRows(dna, k)
+    activate CheckRows
+    
+    loop Para cada fila
+        CheckRows->>CheckRows: Buscar 4 caracteres consecutivos iguales
+        alt Secuencia encontrada
+            CheckRows->>CheckRows: sequenceCount++
+            alt sequenceCount > 1
+                CheckRows-->>MD: return sequenceCount (Early exit)
+            end
+        end
+    end
+    
+    CheckRows-->>MD: sequenceCount
+    deactivate CheckRows
+    
+    alt sequenceCount > 1
+        MD-->>Caller: return true (ES MUTANTE)
+    end
+    
+    Note right of MD: 2. Verificar columnas (vertical)
+    MD->>CheckColumns: checkColumns(dna, k)
+    activate CheckColumns
+    
+    loop Para cada columna
+        CheckColumns->>CheckColumns: Buscar 4 caracteres consecutivos iguales
+        alt Secuencia encontrada
+            CheckColumns->>CheckColumns: sequenceCount++
+            alt sequenceCount > 1
+                CheckColumns-->>MD: return sequenceCount (Early exit)
+            end
+        end
+    end
+    
+    CheckColumns-->>MD: sequenceCount
+    deactivate CheckColumns
+    
+    alt sequenceCount > 1
+        MD-->>Caller: return true (ES MUTANTE)
+    end
+    
+    Note right of MD: 3. Verificar diagonales (\ y /)
+    MD->>CheckDiagonals: checkDiagonals(dna, k)
+    activate CheckDiagonals
+    
+    loop Diagonales descendentes (\)
+        CheckDiagonals->>CheckDiagonals: Verificar secuencia de 4
+        alt Secuencia encontrada
+            CheckDiagonals->>CheckDiagonals: sequenceCount++
+            alt sequenceCount > 1
+                CheckDiagonals-->>MD: return sequenceCount
+            end
+        end
+    end
+    
+    loop Diagonales ascendentes (/)
+        CheckDiagonals->>CheckDiagonals: Verificar secuencia de 4
+        alt Secuencia encontrada
+            CheckDiagonals->>CheckDiagonals: sequenceCount++
+            alt sequenceCount > 1
+                CheckDiagonals-->>MD: return sequenceCount
+            end
+        end
+    end
+    
+    CheckDiagonals-->>MD: sequenceCount
+    deactivate CheckDiagonals
+    
+    MD->>MD: return sequenceCount > 1
+    
+    alt sequenceCount > 1
+        MD-->>Caller: return true (ES MUTANTE)
+    else sequenceCount <= 1
+        MD-->>Caller: return false (ES HUMANO)
+    end
+    
+    deactivate MD
+            </pre>
+        </div>
+    </div>
+
+    <!-- Diagrama 2: GET /stats -->
+    <div class="page-break">
+        <h2>Diagrama 2: GET /stats - Consulta de Estadísticas</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+sequenceDiagram
+    participant Cliente
+    participant StatsController
+    participant StatsService
+    participant DNARecordRepositorio
+    participant BaseDatos
+
+    Note over Cliente,BaseDatos: GET /stats - Obtener estadísticas de verificaciones
+
+    Cliente->>StatsController: GET /stats
+    activate StatsController
+    
+    StatsController->>StatsService: getStats()
+    activate StatsService
+    
+    Note right of StatsService: 1. Consultar cantidad de mutantes
+    StatsService->>DNARecordRepositorio: countByIsMutant(true)
+    activate DNARecordRepositorio
+    
+    DNARecordRepositorio->>BaseDatos: SELECT COUNT(*)<br/>FROM dna_record<br/>WHERE is_mutant = true
+    activate BaseDatos
+    
+    BaseDatos-->>DNARecordRepositorio: long count
+    deactivate BaseDatos
+    
+    DNARecordRepositorio-->>StatsService: countMutantDna
+    deactivate DNARecordRepositorio
+    
+    Note right of StatsService: 2. Consultar cantidad de humanos
+    StatsService->>DNARecordRepositorio: countByIsMutant(false)
+    activate DNARecordRepositorio
+    
+    DNARecordRepositorio->>BaseDatos: SELECT COUNT(*)<br/>FROM dna_record<br/>WHERE is_mutant = false
+    activate BaseDatos
+    
+    BaseDatos-->>DNARecordRepositorio: long count
+    deactivate BaseDatos
+    
+    DNARecordRepositorio-->>StatsService: countHumanDna
+    deactivate DNARecordRepositorio
+    
+    Note right of StatsService: 3. Calcular ratio mutante/humano
+    
+    alt countHumanDna == 0
+        StatsService->>StatsService: ratio = 0
+        Note right of StatsService: Evitar división por cero
+    else countHumanDna > 0
+        StatsService->>StatsService: ratio = countMutantDna / countHumanDna
+        Note right of StatsService: Ejemplo: 40 / 100 = 0.4
+    end
+    
+    StatsService->>StatsService: new StatsResponse(<br/>countMutantDna,<br/>countHumanDna,<br/>ratio)
+    
+    StatsService-->>StatsController: StatsResponse
+    deactivate StatsService
+    
+    StatsController->>StatsController: ResponseEntity.ok(stats)
+    
+    StatsController-->>Cliente: 200 OK<br/>{<br/>  "count_mutant_dna": 40,<br/>  "count_human_dna": 100,<br/>  "ratio": 0.4<br/>}
+    deactivate StatsController
+            </pre>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>API de Detección de Mutantes</strong></p>
+        <p>Federica Benito - Comisión 3K10 - thaliaunder@gmail.com</p>
+    </div>
+
+    <script>
+        // Inicializar Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                wrap: true,
+                wrapPadding: 10
+            }
+        });
+
+        // Agregar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-AR');
+    </script>
+</body>
+</html>
