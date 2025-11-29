@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.Excepcion;
+package global_mutantes.Excepcion;
 
 public class DnaHashCalculationException extends RuntimeException{
     public DnaHashCalculationException(String message) {

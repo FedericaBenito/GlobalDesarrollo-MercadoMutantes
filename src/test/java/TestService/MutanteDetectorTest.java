@@ -1,7 +1,7 @@
 package TestService;
 
 
-import GLOBAL_MUTANTES.Servicios.MutanteDetector;
+import global_mutantes.Servicios.MutanteDetector;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;

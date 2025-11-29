@@ -1,7 +1,7 @@
-package GLOBAL_MUTANTES.Servicios;
+package global_mutantes.Servicios;
 
-import GLOBAL_MUTANTES.Entidades.DNARecord;
-import GLOBAL_MUTANTES.Repositorio.DNARecordRepositorio;
+import global_mutantes.Entidades.DNARecord;
+import global_mutantes.Repositorio.DNARecordRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;

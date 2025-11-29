@@ -1,8 +1,8 @@
-package GLOBAL_MUTANTES.Servicios;
+package global_mutantes.Servicios;
 
 
-import GLOBAL_MUTANTES.Repositorio.DNARecordRepositorio;
-import GLOBAL_MUTANTES.dtos.StatsResponse;
+import global_mutantes.Repositorio.DNARecordRepositorio;
+import global_mutantes.dtos.StatsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

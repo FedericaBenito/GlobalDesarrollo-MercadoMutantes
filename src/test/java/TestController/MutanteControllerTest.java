@@ -1,9 +1,9 @@
 package TestController;
 
-import GLOBAL_MUTANTES.Servicios.MutanteDetector;
-import GLOBAL_MUTANTES.controllers.MutantController;
-import GLOBAL_MUTANTES.dtos.DnaRequest;
-import GLOBAL_MUTANTES.dtos.DnaResponse;
+import global_mutantes.Servicios.MutanteDetector;
+import global_mutantes.controllers.MutantController;
+import global_mutantes.dtos.DnaRequest;
+import global_mutantes.dtos.DnaResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

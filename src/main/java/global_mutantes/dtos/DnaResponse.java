@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.dtos;
+package global_mutantes.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;

@@ -1,8 +1,8 @@
-package GLOBAL_MUTANTES.controllers;
+package global_mutantes.controllers;
 
-import GLOBAL_MUTANTES.Servicios.MutanteDetector;
-import GLOBAL_MUTANTES.dtos.DnaRequest;
-import GLOBAL_MUTANTES.dtos.DnaResponse;
+import global_mutantes.Servicios.MutanteDetector;
+import global_mutantes.dtos.DnaRequest;
+import global_mutantes.dtos.DnaResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

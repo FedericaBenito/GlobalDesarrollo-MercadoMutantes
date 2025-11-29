@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.dtos;
+package global_mutantes.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

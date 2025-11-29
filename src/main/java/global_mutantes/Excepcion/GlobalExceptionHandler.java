@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.Excepcion;
+package global_mutantes.Excepcion;
 
 
 import org.springframework.http.HttpStatus;

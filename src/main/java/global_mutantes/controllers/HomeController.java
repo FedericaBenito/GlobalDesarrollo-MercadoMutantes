@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.controllers;
+package global_mutantes.controllers;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.GetMapping;

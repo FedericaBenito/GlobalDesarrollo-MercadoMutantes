@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.Validaciones;
+package global_mutantes.Validaciones;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

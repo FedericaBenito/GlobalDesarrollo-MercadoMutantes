@@ -1,4 +1,4 @@
-package GLOBAL_MUTANTES.Entidades;
+package global_mutantes.Entidades;
 
 
 import jakarta.persistence.*;
