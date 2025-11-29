@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'org.globalmutantes'
+group = 'global_mutantes'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -54,7 +54,7 @@ tasks.named('test') {
 bootJar {
     enabled = true
     archiveFileName = "mutantes-v2-${version}.jar"
-    mainClass = 'org.globalmutantes.MutantesDetectorMAIN'
+    mainClass = 'global_mutantes.MutantesDetectorMAIN'  // ✅ Ya lo tienes bien
 }
 
 test {
@@ -75,7 +75,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/GLOBAL_MUTANTES/*',
+                    '**/global_mutantes/MutantesDetectorMAIN.class',
                     '**/config/**',
                     '**/*$*'
             ])
