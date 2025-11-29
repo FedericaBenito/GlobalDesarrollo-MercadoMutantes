@@ -1,6 +1,6 @@
 package global_mutantes.controllers;
 
-import global_mutantes.Servicios.MutanteDetector;
+import global_mutantes.Servicios.ServicioMutante;
 import global_mutantes.dtos.DnaRequest;
 import global_mutantes.dtos.DnaResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +18,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/mutant")
 public class MutantController {
 
-    private final MutanteDetector mutantDetector;
+    private final ServicioMutante servicioMutante;
 
-    public MutantController(MutanteDetector mutantDetector) {
-        this.mutantDetector = mutantDetector;
+    public MutantController(ServicioMutante servicioMutante) {
+        this.servicioMutante = servicioMutante;
     }
 
     @PostMapping
@@ -55,12 +55,12 @@ public class MutantController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Datos de entrada inválidos - ADN nulo, vacío, matriz no cuadrada o caracteres inválidos",
+                    description = "Datos de entrada inválidos",
                     content = @Content
             )
     })
     public ResponseEntity<DnaResponse> checkMutant(@Valid @RequestBody DnaRequest dnaRequest) {
-        boolean esMutante = mutantDetector.analyzeDna(dnaRequest.getDna());
+        boolean esMutante = servicioMutante.analyzeDna(dnaRequest.getDna());
 
         DnaResponse respuesta = construirRespuesta(esMutante);
 

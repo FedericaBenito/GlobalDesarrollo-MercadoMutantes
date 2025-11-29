@@ -1,6 +1,6 @@
 package TestController;
 
-import global_mutantes.Servicios.MutanteDetector;
+import global_mutantes.Servicios.ServicioMutante;  // ⬅️ Cambio importante
 import global_mutantes.controllers.MutantController;
 import global_mutantes.dtos.DnaRequest;
 import global_mutantes.dtos.DnaResponse;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.times;
 public class MutanteControllerTest {
 
     @Mock
-    private MutanteDetector mutantDetector;
+    private ServicioMutante servicioMutante;  // ⬅️ Cambio importante
 
     @InjectMocks
     private MutantController mutantController;
@@ -87,12 +87,12 @@ public class MutanteControllerTest {
     }
 
     private void configurarDetectorMutante(boolean esMutante) {
-        when(mutantDetector.analyzeDna(any(String[].class))).thenReturn(esMutante);
+        when(servicioMutante.analyzeDna(any(String[].class))).thenReturn(esMutante);  // ⬅️ Cambio
     }
 
     private void configurarDetectorParaSecuencias(String[] primerAdn, String[] segundoAdn) {
-        when(mutantDetector.analyzeDna(primerAdn)).thenReturn(true);
-        when(mutantDetector.analyzeDna(segundoAdn)).thenReturn(true);
+        when(servicioMutante.analyzeDna(primerAdn)).thenReturn(true);  // ⬅️ Cambio
+        when(servicioMutante.analyzeDna(segundoAdn)).thenReturn(true);  // ⬅️ Cambio
     }
 
     private void verificarRespuestaMutante(ResponseEntity<DnaResponse> respuesta) {
@@ -106,11 +106,11 @@ public class MutanteControllerTest {
     }
 
     private void verificarLlamadaDetector(String[] secuencia, int vecesEsperadas) {
-        verify(mutantDetector, times(vecesEsperadas)).analyzeDna(secuencia);
+        verify(servicioMutante, times(vecesEsperadas)).analyzeDna(secuencia);  // ⬅️ Cambio
     }
 
     private void verificarLlamadasMultiples(String[] primerAdn, String[] segundoAdn) {
-        verify(mutantDetector, times(1)).analyzeDna(primerAdn);
-        verify(mutantDetector, times(1)).analyzeDna(segundoAdn);
+        verify(servicioMutante, times(1)).analyzeDna(primerAdn);  // ⬅️ Cambio
+        verify(servicioMutante, times(1)).analyzeDna(segundoAdn);  // ⬅️ Cambio
     }
 }
